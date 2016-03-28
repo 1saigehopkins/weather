@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Cloudy</title>
+      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+      <script>
+      var ding = confirm("Thank you for visiting our tiny alien proximity predictor. Please answer the next few questions in order to approximate what your chances are of coming into contact with a tiny alien.")
+      var state = prompt("Which US State are you in?");
+      var ood = prompt("Do you smell cinnamon?");
+      var one = prompt("How many windows can you currently see without moving your neck?");
+      var city = prompt("What city are you in right now?");
+      var two = prompt("On a scale from 1-10, how likely are you to go on a walk around your block in the witching hour (4am) on a Sunday?");
+
+      $.getJSON("http://cooper-union-weather-proxy.herokuapp.com/weather/" + state + "/" + city, function(response){
+        console.log(response);
+
+        //example of outputting the current temp
+
+        var humidity = response.current_observation.relative_humidity;
+
+        $(".first").append("There is a " + response.current_observation.relative_humidity + " chance that you will come into contact with a tiny alien today.");
+
+
+        //create image tag
+        var doodle = '<img src="'+response.current_observation.icon_url+'" />';
+
+        //append image tag to #first
+        $('.second').append(doodle);
+
+        });
+
+        $(document).ready(function(){
+
+          $(".second").hover(function(){
+            $(".second").toggleClass("forth");
+          })
+
+        });
+
+      </script>
+
+      <style>
+
+        .first {
+          font-size: 2em;
+          font-family: Georgia;
+          color: rgb(249, 163, 35);
+          font-style: italic;
+          height: 150px;
+          text-align: center;
+          margin-top: 30px;
+        }
+
+        .second {
+          position: absolute;
+          top: 120px;
+          left: 150px;
+          width:10000px;
+          height:500px;
+          -webkit-transition: width 6s, height 6s;
+        }
+
+        .forth {
+          top: 70px;
+          left: 1000px;
+          width:10000px;
+          height:500px;
+          -webkit-transition: top 3s, left 8s;
+        }
+
+        * {
+          background-color: rgb(230, 238, 255);
+        }
+
+      </style>
+    </head>
+
+<body>
+<div class="first"></div>
+<div class="second"></div>
+<div class="third"></div>
+<div class="forth"></div>
+<div class="fifth"></div>
+<div class="sixth"></div>
+</body>
+
+</html>
